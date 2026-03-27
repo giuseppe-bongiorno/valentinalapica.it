@@ -357,8 +357,8 @@ function HomePage({ nav }) {
           <SectionTitle label="Dove ricevo" title="Due sedi a Genova per te" />
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(280px,100%),1fr))", gap:24 }}>
             {[
-              { name:"Studio Carignano", addr:"Viale Sauli 39/3, 16121 Genova", zone:"Carignano · Foce · Castelletto · Centro", transport:"10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20", primary:true },
-              { name:"Casa della Salute Nervi", addr:"Viale Franchini 24, 16167 Genova", zone:"Nervi · Quarto · Quinto · Bogliasco · Recco", transport:"Stazione Genova Nervi · Bus AMT", primary:false },
+              { name:"Genova Centro", addr:"Via Cesarea 2/20 secondo piano, 16121 Genova", zone:"Via XX Settembre · Carignano · Foce · Castelletto · Centro", transport:"10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20", primary:true },
+             /* { name:"Casa della Salute Nervi", addr:"Viale Franchini 24, 16167 Genova", zone:"Nervi · Quarto · Quinto · Bogliasco · Recco", transport:"Stazione Genova Nervi · Bus AMT", primary:false },*/
             ].map((s,i) => (
               <div key={i} style={{ background:palette.white, borderRadius:16, padding:28, border:s.primary?`2px solid ${palette.rose}`:`1px solid ${palette.border}` }}>
                 {s.primary && <div style={{ fontSize:11, fontWeight:700, color:palette.rose, textTransform:"uppercase", letterSpacing:1.5, marginBottom:8 }}>Sede principale</div>}
@@ -502,8 +502,8 @@ function ContattiPage() {
           <div>
             <h2 style={{ fontSize:26, fontWeight:600, color:palette.navy, marginBottom:24 }}>Sedi</h2>
             {[
-              { name:"Studio Carignano", addr:"Viale Sauli 39/3 — 16121 Genova", details:["Zona Carignano, tra Corso Torino e Piazza Palermo","10 min a piedi da stazione Brignole","Bus AMT: linee 15, 17, 20","Auto: uscita A12 Genova Est","Parcheggi nelle vie limitrofe"], primary:true },
-              { name:"Casa della Salute Nervi", addr:"Viale Franchini 24 — 16167 Genova", details:["Stazione Genova Nervi","Ideale per: Quarto, Quinto, Bogliasco, Recco, Camogli"], primary:false },
+              { name:"Genova Centro", addr:"Via Cesarea 2/20 secondo piano, 16121 Genova", zone:"Via XX Settembre · Carignano · Foce · Castelletto · Centro", transport:"10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20", primary:true },
+              /*{ name:"Casa della Salute Nervi", addr:"Viale Franchini 24 — 16167 Genova", details:["Stazione Genova Nervi","Ideale per: Quarto, Quinto, Bogliasco, Recco, Camogli"], primary:false },*/
             ].map((s,i) => (
               <div key={i} style={{ background:palette.white, borderRadius:16, padding:24, border:s.primary?`2px solid ${palette.rose}`:`1px solid ${palette.border}`, marginBottom:16 }}>
                 {s.primary && <div style={{ fontSize:11, fontWeight:700, color:palette.rose, textTransform:"uppercase", letterSpacing:1.5, marginBottom:8 }}>Sede principale</div>}
