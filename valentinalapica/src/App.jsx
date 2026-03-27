@@ -33,6 +33,8 @@ const PAGES = {
   menopausa: "menopausa",
   contatti: "contatti",
   blog: "blog",
+  privacy: "privacy-policy",
+  cookie: "cookie-policy",
 };
 
 // ─── Styles ───
@@ -868,12 +870,161 @@ function Footer({ nav }) {
         <div style={{ borderTop:"1px solid rgba(255,255,255,0.1)", paddingTop:24, display:"flex", justifyContent:"space-between", flexWrap:"wrap", gap:16 }}>
           <div style={{ fontSize:12 }}>© 2026 Dott.ssa Valentina La Pica · P.IVA 11174040961 · OMCeO GE 16037</div>
           <div style={{ fontSize:12, display:"flex", gap:16 }}>
-            <span style={{ cursor:"pointer" }}>Privacy Policy</span>
-            <span style={{ cursor:"pointer" }}>Cookie Policy</span>
+            <span style={{ cursor:"pointer", textDecoration:"underline" }} onClick={() => nav(PAGES.privacy)}>Privacy Policy</span>
+            <span style={{ cursor:"pointer", textDecoration:"underline" }} onClick={() => nav(PAGES.cookie)}>Cookie Policy</span>
           </div>
         </div>
       </div>
     </footer>
+  );
+}
+
+// ─── Privacy Policy Page ───
+function PrivacyPage({ nav }) {
+  const Section = ({ title, children }) => (
+    <div style={{ marginBottom:40 }}>
+      <h2 style={{ fontSize:"clamp(17px,2.5vw,22px)", fontWeight:600, color:palette.navy, marginBottom:14 }}>{title}</h2>
+      {children}
+    </div>
+  );
+  const p = (text) => <p style={{ fontSize:15, lineHeight:1.8, color:palette.charcoal, marginBottom:12 }}>{text}</p>;
+  return (
+    <div>
+      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"clamp(80px,12vw,100px) clamp(16px,4vw,24px) clamp(40px,8vw,60px)" }}>
+        <div style={{ maxWidth:760, margin:"0 auto" }} className="fade-up">
+          <h1 style={{ fontSize:"clamp(24px,4vw,38px)", fontWeight:700, color:palette.white, marginBottom:10 }}>Privacy Policy</h1>
+          <p style={{ fontSize:14, color:"rgba(255,255,255,0.7)" }}>Ultimo aggiornamento: gennaio 2026</p>
+        </div>
+      </div>
+      <div style={{ maxWidth:760, margin:"0 auto", padding:"clamp(32px,6vw,64px) clamp(16px,4vw,24px)" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:40, fontSize:13, color:palette.mist }}>
+          <button onClick={() => nav(PAGES.home)} style={{ background:"none", border:"none", cursor:"pointer", color:palette.rose, fontFamily:"'DM Sans',sans-serif", fontSize:13, padding:0 }}>Home</button>
+          <span>/</span>
+          <span style={{ color:palette.charcoal }}>Privacy Policy</span>
+        </div>
+
+        <Section title="Titolare del trattamento">
+          {p("Dott.ssa Valentina La Pica, con studio in Viale Sauli 39/3, 16121 Genova (GE).")}
+          {p("Email: segreteria@valentinalapica.it — Tel: 351 817 1675")}
+        </Section>
+
+        <Section title="Dati raccolti">
+          {p("Il presente sito web (valentinalapica.it) non raccoglie dati personali tramite form di contatto o registrazione. I dati eventualmente forniti dall'utente tramite email o telefono (nome, recapiti, informazioni sanitarie) sono trattati esclusivamente per rispondere alla richiesta e gestire il rapporto professionale.")}
+          {p("I dati di navigazione (indirizzo IP, browser, pagine visitate) possono essere registrati automaticamente dai sistemi informatici preposti al funzionamento del sito, per sole finalità tecniche.")}
+        </Section>
+
+        <Section title="Finalità del trattamento">
+          {p("I dati personali sono trattati per: (a) rispondere a richieste di informazioni o appuntamenti; (b) gestire il rapporto medico-paziente; (c) adempiere agli obblighi di legge in ambito sanitario.")}
+          {p("Non sono ceduti a terzi, non vengono usati per finalità commerciali, non sono oggetto di profilazione.")}
+        </Section>
+
+        <Section title="Base giuridica">
+          {p("Il trattamento si basa sul consenso dell'interessato (art. 6 c. 1 lett. a GDPR) e, per i dati sanitari, sul consenso esplicito per le finalità di cura della salute (art. 9 c. 2 lett. a e h GDPR).")}
+        </Section>
+
+        <Section title="Conservazione dei dati">
+          {p("I dati dei pazienti sono conservati per il periodo previsto dalla normativa vigente in materia di documentazione sanitaria (10 anni dalla fine del rapporto professionale, salvo disposizioni specifiche). I dati di contatto non medici sono eliminati su richiesta dell'interessato.")}
+        </Section>
+
+        <Section title="Diritti dell'interessato">
+          {p("Ai sensi degli artt. 15–22 GDPR, l'interessato ha diritto di: accesso, rettifica, cancellazione, limitazione del trattamento, portabilità, opposizione. Per esercitare questi diritti scrivere a segreteria@valentinalapica.it.")}
+          {p("Ha inoltre il diritto di proporre reclamo al Garante per la Protezione dei Dati Personali (www.garanteprivacy.it).")}
+        </Section>
+
+        <Section title="Cookie">
+          {p("Per le informazioni sui cookie utilizzati dal sito si rimanda alla Cookie Policy.")}
+        </Section>
+
+        <div style={{ marginTop:48 }}>
+          <button className="cta-btn-outline" onClick={() => nav(PAGES.home)}>← Torna alla home</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Cookie Policy Page ───
+function CookiePage({ nav }) {
+  const Section = ({ title, children }) => (
+    <div style={{ marginBottom:40 }}>
+      <h2 style={{ fontSize:"clamp(17px,2.5vw,22px)", fontWeight:600, color:palette.navy, marginBottom:14 }}>{title}</h2>
+      {children}
+    </div>
+  );
+  const p = (text) => <p style={{ fontSize:15, lineHeight:1.8, color:palette.charcoal, marginBottom:12 }}>{text}</p>;
+  const tableRow = (nome, tipo, scopo, scadenza) => (
+    <tr style={{ borderBottom:`1px solid ${palette.border}` }}>
+      <td style={{ padding:"10px 12px", fontSize:13, fontFamily:"monospace", color:palette.charcoal }}>{nome}</td>
+      <td style={{ padding:"10px 12px", fontSize:13, color:palette.slate }}>{tipo}</td>
+      <td style={{ padding:"10px 12px", fontSize:13, color:palette.slate }}>{scopo}</td>
+      <td style={{ padding:"10px 12px", fontSize:13, color:palette.slate }}>{scadenza}</td>
+    </tr>
+  );
+  return (
+    <div>
+      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"clamp(80px,12vw,100px) clamp(16px,4vw,24px) clamp(40px,8vw,60px)" }}>
+        <div style={{ maxWidth:760, margin:"0 auto" }} className="fade-up">
+          <h1 style={{ fontSize:"clamp(24px,4vw,38px)", fontWeight:700, color:palette.white, marginBottom:10 }}>Cookie Policy</h1>
+          <p style={{ fontSize:14, color:"rgba(255,255,255,0.7)" }}>Ultimo aggiornamento: gennaio 2026</p>
+        </div>
+      </div>
+      <div style={{ maxWidth:760, margin:"0 auto", padding:"clamp(32px,6vw,64px) clamp(16px,4vw,24px)" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:40, fontSize:13, color:palette.mist }}>
+          <button onClick={() => nav(PAGES.home)} style={{ background:"none", border:"none", cursor:"pointer", color:palette.rose, fontFamily:"'DM Sans',sans-serif", fontSize:13, padding:0 }}>Home</button>
+          <span>/</span>
+          <span style={{ color:palette.charcoal }}>Cookie Policy</span>
+        </div>
+
+        <Section title="Cosa sono i cookie">
+          {p("I cookie sono piccoli file di testo che i siti web salvano nel browser dell'utente durante la navigazione. Permettono al sito di ricordare le preferenze e migliorare l'esperienza di visita.")}
+        </Section>
+
+        <Section title="Cookie utilizzati da questo sito">
+          {p("Il sito valentinalapica.it è una Single Page Application (SPA) che non utilizza cookie di profilazione, cookie pubblicitari o strumenti di tracciamento di terze parti.")}
+          <div style={{ overflowX:"auto", marginTop:16 }}>
+            <table style={{ width:"100%", borderCollapse:"collapse", border:`1px solid ${palette.border}`, borderRadius:8, overflow:"hidden" }}>
+              <thead>
+                <tr style={{ background:palette.rosePale }}>
+                  <th style={{ padding:"12px", textAlign:"left", fontSize:12, fontWeight:700, color:palette.navy, textTransform:"uppercase", letterSpacing:0.5 }}>Nome</th>
+                  <th style={{ padding:"12px", textAlign:"left", fontSize:12, fontWeight:700, color:palette.navy, textTransform:"uppercase", letterSpacing:0.5 }}>Tipo</th>
+                  <th style={{ padding:"12px", textAlign:"left", fontSize:12, fontWeight:700, color:palette.navy, textTransform:"uppercase", letterSpacing:0.5 }}>Scopo</th>
+                  <th style={{ padding:"12px", textAlign:"left", fontSize:12, fontWeight:700, color:palette.navy, textTransform:"uppercase", letterSpacing:0.5 }}>Scadenza</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tableRow("Nessun cookie proprio", "—", "Il sito non imposta cookie propri", "—")}
+              </tbody>
+            </table>
+          </div>
+        </Section>
+
+        <Section title="Google Fonts">
+          {p("Il sito carica i font tipografici da Google Fonts (fonts.googleapis.com). Google può raccogliere dati tecnici sulla richiesta (indirizzo IP, browser). Per maggiori informazioni: policies.google.com/privacy.")}
+          {p("Il caricamento avviene in modalità non bloccante (media='print') per ridurre l'impatto sulle prestazioni.")}
+        </Section>
+
+        <Section title="Link esterni">
+          {p("Il sito contiene link a servizi esterni (WhatsApp, MioDottore). Una volta abbandonato il sito, si applicano le rispettive privacy e cookie policy di terze parti, sulle quali non abbiamo controllo.")}
+        </Section>
+
+        <Section title="Come disabilitare i cookie">
+          {p("Puoi configurare il tuo browser per bloccare o eliminare i cookie. Di seguito le istruzioni per i browser più comuni:")}
+          <ul style={{ paddingLeft:20, marginTop:8, display:"flex", flexDirection:"column", gap:8 }}>
+            {["Chrome: Impostazioni → Privacy e sicurezza → Cookie","Firefox: Preferenze → Privacy e sicurezza → Cookie","Safari: Preferenze → Privacy → Gestisci dati siti web","Edge: Impostazioni → Privacy → Cookie"].map((t,i) => (
+              <li key={i} style={{ fontSize:14, color:palette.slate, lineHeight:1.6 }}>{t}</li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section title="Aggiornamenti">
+          {p("Questa Cookie Policy può essere aggiornata in qualsiasi momento. Ti invitiamo a consultarla periodicamente. La data dell'ultimo aggiornamento è indicata in cima alla pagina.")}
+        </Section>
+
+        <div style={{ marginTop:48 }}>
+          <button className="cta-btn-outline" onClick={() => nav(PAGES.home)}>← Torna alla home</button>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -1087,6 +1238,8 @@ export default function App() {
     }
     const article = blogArticles.find(a => a.slug === page);
     if (article) return <BlogArticlePage article={article} nav={nav}/>;
+    if (page === PAGES.privacy) return <PrivacyPage nav={nav}/>;
+    if (page === PAGES.cookie) return <CookiePage nav={nav}/>;
     return <HomePage nav={nav}/>;
   };
 
