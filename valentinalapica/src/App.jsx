@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
+const AppEn = lazy(() => import("./en/AppEn"));
 import { Phone, Mail, MapPin, Clock, ChevronDown, Menu, X, Star, Heart, Baby, Stethoscope, CalendarDays, ArrowRight, MessageCircle, ExternalLink, CheckCircle, Award, GraduationCap, Building2, Users, Sparkles, Activity, Pill, Search } from "lucide-react";
 
 // ─── Design Tokens ───
@@ -354,7 +355,7 @@ function HomePage({ nav }) {
       {/* DOVE TROVARMI */}
       <section style={{ background:palette.cream }}>
         <div className="section-pad">
-          <SectionTitle label="Dove ricevo" title="Due sedi a Genova per te" />
+          <SectionTitle label="Dove ricevo" title="Genova, Italia" />
           <div style={{ maxWidth:560 }}>
             <div style={{ background:palette.white, borderRadius:16, padding:28, border:`2px solid ${palette.rose}` }}>
               <div style={{ fontSize:11, fontWeight:700, color:palette.rose, textTransform:"uppercase", letterSpacing:1.5, marginBottom:8 }}>Sede</div>
@@ -365,7 +366,7 @@ function HomePage({ nav }) {
               </div>
               {[
                 "Via XX Settembre · Centro · Foce · Castelletto · Centro",
-                "10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20",
+                "10 min a piedi da Genova Brignole · Bus AMT 13, 14, 44, 46, 17, 17/, 20, 35, 36 20",
                 "Auto: uscita A12 Genova Est",
                 "Parcheggi nelle vie limitrofe, P.zza della Vittoria",
               ].map((d,i) => (
@@ -457,7 +458,7 @@ function GinecologaPage({ nav }) {
         { q:"Qual è la miglior ginecologa a Genova?", a:"La scelta dipende dalle tue esigenze. La Dott.ssa La Pica ha formazione al Policlinico San Martino e Gaslini, con competenze in menopausa, endometriosi, gravidanza e ginecologia pediatrica. Le pazienti la descrivono come professionale, empatica e attenta." },
         { q:"La Dott.ssa La Pica riceve in inglese?", a:"Sì. Lo studio è aperto anche a pazienti di madrelingua inglese che vivono a Genova o in Liguria." },
         { q:"Si possono fare ecografia e Pap test nello stesso appuntamento?", a:"Sì. Eseguo entrambi gli esami nella stessa seduta, ottimizzando i tempi." },
-        { q:"Come si arriva allo studio in Via Cesarea?", a:"Bus AMT linee 15, 17, 20 (fermata Corso Torino / Piazza Palermo). A 10 minuti a piedi dalla stazione Brignole. In auto: uscita Genova Est. Parcheggi nelle vie circostanti e in P.zza della Vittoria." },
+        { q:"Come si arriva allo studio in Via Cesarea?", a:"Bus AMT 13, 14, 44, 46, 17, 17/, 20, 35, 36 20. A 10 minuti a piedi dalla stazione Brignole. In auto: uscita Genova Est. Parcheggi nelle vie circostanti e in P.zza della Vittoria." },
         { q:"La Dott.ssa si occupa anche di menopausa e ormoni bioidentici?", a:"Sì. La menopausa e la terapia con ormoni bioidentici sono tra le sue aree di specializzazione. Offre percorsi personalizzati per vampate, insonnia, secchezza vaginale e prevenzione osteoporosi." },
       ]}
       ctaText="Prenota la tua visita ginecologica a Genova"
@@ -511,7 +512,7 @@ function ContattiPage() {
               <p style={{ fontSize:14, color:palette.slate, marginBottom:12 }}>Via Cesarea 2/20 secondo piano, 16121 Genova</p>
               {[
                 "Via XX Settembre · Centro · Foce · Castelletto · Centro",
-                "10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20",
+                "10 min a piedi da Genova Brignole · Bus AMT 13, 14, 44, 46, 17, 17/, 20, 35, 36 20",
                 "Auto: uscita A12 Genova Est",
                 "Parcheggi nelle vie limitrofe, P.zza della Vittoria",
               ].map((d,j) => (
@@ -627,7 +628,7 @@ function BlogPage() {
 // ══════════════════════════════════════
 // NAVBAR
 // ══════════════════════════════════════
-function Navbar({ page, nav }) {
+function Navbar({ page, nav, onLangChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -698,6 +699,10 @@ function Navbar({ page, nav }) {
             {navItem("Ginecologa Genova", PAGES.ginecologa)}
             {navItem("Blog", PAGES.blog)}
             {navItem("Contatti", PAGES.contatti)}
+            <div style={{ display:"flex", gap:2, padding:"3px", background:palette.creamDark, borderRadius:20 }}>
+              <button onClick={()=>onLangChange("it")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:700, background:palette.white, color:palette.navy, fontFamily:"'DM Sans',sans-serif", boxShadow:"0 1px 4px rgba(0,0,0,0.08)" }}>🇮🇹 IT</button>
+              <button onClick={()=>onLangChange("en")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:400, background:"transparent", color:palette.mist, fontFamily:"'DM Sans',sans-serif" }}>🇬🇧 EN</button>
+            </div>
             <button className="cta-btn" style={{ padding:"8px 20px", fontSize:13 }} onClick={()=>nav(PAGES.contatti)}>
               <Phone size={14}/> Prenota
             </button>
@@ -730,7 +735,13 @@ function Navbar({ page, nav }) {
                 {item.label}
               </button>
             ))}
-            <button className="cta-btn" style={{ marginTop:12, justifyContent:"center" }} onClick={()=>nav(PAGES.contatti)}>
+            <div style={{ padding:"4px 16px 8px" }}>
+              <div style={{ display:"flex", gap:2, padding:"3px", background:palette.creamDark, borderRadius:20, width:"fit-content" }}>
+                <button onClick={()=>onLangChange("it")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:700, background:palette.white, color:palette.navy, fontFamily:"'DM Sans',sans-serif" }}>🇮🇹 IT</button>
+                <button onClick={()=>onLangChange("en")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:400, background:"transparent", color:palette.mist, fontFamily:"'DM Sans',sans-serif" }}>🇬🇧 EN</button>
+              </div>
+            </div>
+            <button className="cta-btn" style={{ marginTop:4, justifyContent:"center" }} onClick={()=>nav(PAGES.contatti)}>
               <Phone size={16}/> Prenota la visita
             </button>
           </div>
@@ -971,9 +982,11 @@ const META = {
 // MAIN APP
 // ══════════════════════════════════════
 export default function App() {
+  const [lang, setLang] = useState("it");
   const [page, setPage] = useState(PAGES.home);
 
   useEffect(() => {
+    if (lang === "en") return;
     const m = META[page] || META[PAGES.home];
     document.title = m.title;
     const desc = document.querySelector('meta[name="description"]');
@@ -982,7 +995,7 @@ export default function App() {
     if (ogTitle) ogTitle.setAttribute("content", m.title);
     const ogDesc = document.querySelector('meta[property="og:description"]');
     if (ogDesc) ogDesc.setAttribute("content", m.description);
-  }, [page]);
+  }, [page, lang]);
 
   const nav = (target) => {
     setPage(target);
@@ -1001,10 +1014,17 @@ export default function App() {
     return <HomePage nav={nav}/>;
   };
 
+  if (lang === "en") return (
+    <Suspense fallback={<div style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"'DM Sans',sans-serif" }}>…</div>}>
+      <style>{globalCSS}</style>
+      <AppEn onLangChange={setLang} />
+    </Suspense>
+  );
+
   return (
     <>
       <style>{globalCSS}</style>
-      <Navbar page={page} nav={nav}/>
+      <Navbar page={page} nav={nav} onLangChange={setLang}/>
       <main style={{ minHeight:"100vh" }}>
         {renderPage()}
       </main>
