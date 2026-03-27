@@ -40,7 +40,7 @@ const globalCSS = `
 ${fontLink}
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { font-family:'DM Sans',sans-serif; color:${palette.charcoal}; background:${palette.cream}; }
+body { font-family:'DM Sans',sans-serif; color:${palette.charcoal}; background:${palette.cream}; overflow-x:hidden; }
 h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
@@ -59,34 +59,45 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
 .stagger-5 { animation-delay: 0.5s; }
 
 .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(139,34,82,0.12); }
+@media(hover:hover) { .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(139,34,82,0.12); } }
 
 .cta-btn {
-  display:inline-flex; align-items:center; gap:8px; padding:14px 28px;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:14px 28px; min-height:48px;
   background:${palette.rose}; color:white; border:none; border-radius:50px;
   font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600;
   cursor:pointer; transition:all 0.3s ease; text-decoration:none;
+  -webkit-tap-highlight-color:transparent;
 }
 .cta-btn:hover { background:${palette.roseLight}; transform:translateY(-2px); box-shadow:0 8px 24px rgba(139,34,82,0.25); }
 
 .cta-btn-outline {
-  display:inline-flex; align-items:center; gap:8px; padding:12px 24px;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:12px 24px; min-height:48px;
   background:transparent; color:${palette.rose}; border:2px solid ${palette.rose};
   border-radius:50px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600;
   cursor:pointer; transition:all 0.3s ease; text-decoration:none;
+  -webkit-tap-highlight-color:transparent;
 }
 .cta-btn-outline:hover { background:${palette.rosePale}; }
 
 .wa-btn {
-  display:inline-flex; align-items:center; gap:8px; padding:14px 28px;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:14px 28px; min-height:48px;
   background:#25D366; color:white; border:none; border-radius:50px;
   font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600;
   cursor:pointer; transition:all 0.3s ease;
+  -webkit-tap-highlight-color:transparent;
 }
 .wa-btn:hover { background:#20BD5A; transform:translateY(-2px); }
 
-.section-pad { padding:80px 24px; max-width:1100px; margin:0 auto; }
-@media(max-width:768px) { .section-pad { padding:48px 16px; } }
+.section-pad { padding:clamp(48px,8vw,80px) clamp(16px,4vw,24px); max-width:1100px; margin:0 auto; }
+
+.btn-row { display:flex; gap:12px; flex-wrap:wrap; }
+@media(max-width:480px) {
+  .btn-row { flex-direction:column; }
+  .btn-row .cta-btn, .btn-row .wa-btn, .btn-row .cta-btn-outline { width:100%; }
+}
 
 .gold-line { width:48px; height:3px; background:${palette.gold}; border-radius:2px; margin-bottom:16px; }
 
@@ -126,7 +137,7 @@ function TrustBadges() {
     { icon: <Award size={22}/>, title:"Iscritta OMCeO", sub:"Genova n. 16037" },
   ];
   return (
-    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:16 }}>
+    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(200px,100%),1fr))", gap:12 }}>
       {badges.map((b,i) => (
         <div key={i} className={`fade-up stagger-${i+1}`} style={{ display:"flex", alignItems:"center", gap:12, padding:"16px 18px", background:palette.white, borderRadius:12, border:`1px solid ${palette.border}` }}>
           <div style={{ color:palette.gold, flexShrink:0 }}>{b.icon}</div>
@@ -185,10 +196,10 @@ function ServiceCard({ icon, title, desc, onClick }) {
 function ServicePage({ title, intro, sections, faqs, ctaText, nav }) {
   return (
     <div>
-      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"100px 24px 60px", textAlign:"center" }}>
+      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"clamp(80px,12vw,100px) clamp(16px,4vw,24px) clamp(40px,8vw,60px)", textAlign:"center" }}>
         <div className="fade-up" style={{ maxWidth:800, margin:"0 auto" }}>
-          <h1 style={{ fontSize:"clamp(30px,5vw,44px)", fontWeight:700, color:palette.white, lineHeight:1.2, marginBottom:16 }}>{title}</h1>
-          <p style={{ fontSize:17, color:"rgba(255,255,255,0.85)", lineHeight:1.6, maxWidth:640, margin:"0 auto" }}>{intro}</p>
+          <h1 style={{ fontSize:"clamp(26px,5vw,44px)", fontWeight:700, color:palette.white, lineHeight:1.2, marginBottom:16 }}>{title}</h1>
+          <p style={{ fontSize:"clamp(15px,2vw,17px)", color:"rgba(255,255,255,0.85)", lineHeight:1.6, maxWidth:640, margin:"0 auto" }}>{intro}</p>
         </div>
       </div>
       <div className="section-pad">
@@ -208,10 +219,10 @@ function ServicePage({ title, intro, sections, faqs, ctaText, nav }) {
           </div>
         )}
 
-        <div style={{ marginTop:48, padding:32, background:`linear-gradient(135deg, ${palette.rosePale}, ${palette.creamDark})`, borderRadius:20, textAlign:"center" }}>
-          <h3 style={{ fontSize:24, fontWeight:600, color:palette.navy, marginBottom:8 }}>{ctaText || "Prenota la tua visita"}</h3>
+        <div style={{ marginTop:48, padding:"clamp(20px,4vw,32px)", background:`linear-gradient(135deg, ${palette.rosePale}, ${palette.creamDark})`, borderRadius:20, textAlign:"center" }}>
+          <h3 style={{ fontSize:"clamp(20px,3vw,24px)", fontWeight:600, color:palette.navy, marginBottom:8 }}>{ctaText || "Prenota la tua visita"}</h3>
           <p style={{ fontSize:15, color:palette.slate, marginBottom:20 }}>Contattami per fissare un appuntamento nel mio studio a Genova.</p>
-          <div style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap" }}>
+          <div className="btn-row" style={{ justifyContent:"center" }}>
             <button className="cta-btn" onClick={()=>nav(PAGES.contatti)}><Phone size={16}/> 351 817 1675</button>
             <button className="wa-btn" onClick={()=>window.open("https://wa.me/393518171675","_blank")}><MessageCircle size={16}/> WhatsApp</button>
           </div>
@@ -239,12 +250,12 @@ function HomePage({ nav }) {
   return (
     <div>
       {/* HERO */}
-      <section style={{ position:"relative", minHeight:"90vh", display:"flex", alignItems:"center", overflow:"hidden", background:`linear-gradient(160deg, ${palette.cream} 0%, ${palette.rosePale} 40%, ${palette.creamDark} 100%)` }}>
+      <section style={{ position:"relative", minHeight:"100svh", display:"flex", alignItems:"center", overflow:"hidden", background:`linear-gradient(160deg, ${palette.cream} 0%, ${palette.rosePale} 40%, ${palette.creamDark} 100%)` }}>
         <div style={{ position:"absolute", top:0, right:0, width:"45%", height:"100%", background:`linear-gradient(180deg, transparent, ${palette.rosePale})`, opacity:0.5, borderBottomLeftRadius:"40%", zIndex:0 }} />
-        <div style={{ position:"absolute", bottom:-60, left:-60, width:200, height:200, borderRadius:"50%", background:palette.gold, opacity:0.07 }} />
-        <div style={{ position:"absolute", top:"20%", right:"10%", width:120, height:120, borderRadius:"50%", border:`2px solid ${palette.border}`, opacity:0.3 }} />
+        <div style={{ position:"absolute", bottom:-60, left:-60, width:"clamp(100px,20vw,200px)", height:"clamp(100px,20vw,200px)", borderRadius:"50%", background:palette.gold, opacity:0.07 }} />
+        <div style={{ position:"absolute", top:"20%", right:"10%", width:"clamp(60px,10vw,120px)", height:"clamp(60px,10vw,120px)", borderRadius:"50%", border:`2px solid ${palette.border}`, opacity:0.3 }} />
 
-        <div className="section-pad" style={{ position:"relative", zIndex:1, display:"grid", gridTemplateColumns:"1fr", gap:40, paddingTop:120 }}>
+        <div className="section-pad" style={{ position:"relative", zIndex:1, display:"grid", gridTemplateColumns:"1fr", gap:40, paddingTop:"clamp(88px,14vw,120px)" }}>
           <div className="fade-up" style={{ maxWidth:720 }}>
             <div style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"6px 16px", background:palette.white, borderRadius:50, border:`1px solid ${palette.border}`, marginBottom:24, fontSize:13, color:palette.slate }}>
               <MapPin size={14} color={palette.rose}/> Studio a Genova, zona Carignano
@@ -258,7 +269,7 @@ function HomePage({ nav }) {
             <p style={{ fontSize:16, lineHeight:1.7, color:palette.slate, maxWidth:540, marginBottom:32 }}>
               Ti accolgo nel mio studio a Genova per offrirti un percorso di cura personalizzato, basato sull'ascolto, la competenza e la fiducia. Ogni visita inizia con il tempo di conoscerti.
             </p>
-            <div style={{ display:"flex", gap:12, flexWrap:"wrap", marginBottom:32 }}>
+            <div className="btn-row" style={{ marginBottom:32 }}>
               <button className="cta-btn" onClick={()=>nav(PAGES.contatti)}><CalendarDays size={16}/> Prenota la visita</button>
               <button className="wa-btn" onClick={()=>window.open("https://wa.me/393518171675","_blank")}><MessageCircle size={16}/> WhatsApp</button>
             </div>
@@ -281,7 +292,7 @@ function HomePage({ nav }) {
       <section style={{ background:palette.cream }}>
         <div className="section-pad">
           <SectionTitle label="Chi sono" title="Formazione, esperienza, ascolto" subtitle="La mia priorità è dedicare a ciascuna paziente il tempo necessario per visitarla con cura, spiegarle i risultati e rispondere a ogni domanda." />
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:32 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(300px,100%),1fr))", gap:32 }}>
             <div className="fade-up">
               <p style={{ fontSize:15, lineHeight:1.8, color:palette.slate, marginBottom:16 }}>
                 Mi sono laureata con lode in Medicina e Chirurgia nel 2012 all'Università degli Studi di Genova. Ho completato la Specializzazione in Ginecologia e Ostetricia al Policlinico Universitario IRCCS San Martino, il principale ospedale della Liguria.
@@ -317,7 +328,7 @@ function HomePage({ nav }) {
       <section style={{ background:palette.white }}>
         <div className="section-pad">
           <SectionTitle label="Servizi" title="Come posso aiutarti" subtitle="Offro una gamma completa di servizi ginecologici e ostetrici nel mio studio a Genova, zona Carignano." center />
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(250px,1fr))", gap:20 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(min(240px,100%),1fr))", gap:20 }}>
             {services.map((s,i) => (
               <ServiceCard key={i} icon={s.icon} title={s.title} desc={s.desc} onClick={()=>nav(s.page)} />
             ))}
@@ -342,7 +353,7 @@ function HomePage({ nav }) {
       <section style={{ background:palette.cream }}>
         <div className="section-pad">
           <SectionTitle label="Dove ricevo" title="Due sedi a Genova per te" />
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:24 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(280px,100%),1fr))", gap:24 }}>
             {[
               { name:"Studio Carignano", addr:"Viale Sauli 39/3, 16121 Genova", zone:"Carignano · Foce · Castelletto · Centro", transport:"10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20", primary:true },
               { name:"Casa della Salute Nervi", addr:"Viale Franchini 24, 16167 Genova", zone:"Nervi · Quarto · Quinto · Bogliasco · Recco", transport:"Stazione Genova Nervi · Bus AMT", primary:false },
@@ -379,13 +390,13 @@ function HomePage({ nav }) {
       </section>
 
       {/* CTA FINALE */}
-      <section style={{ background:`linear-gradient(135deg, ${palette.navy}, ${palette.rose})`, padding:"80px 24px", textAlign:"center" }}>
+      <section style={{ background:`linear-gradient(135deg, ${palette.navy}, ${palette.rose})`, padding:"clamp(48px,10vw,80px) clamp(16px,4vw,24px)", textAlign:"center" }}>
         <div className="fade-up" style={{ maxWidth:600, margin:"0 auto" }}>
-          <h2 style={{ fontSize:"clamp(28px,4vw,38px)", fontWeight:700, color:palette.white, marginBottom:16 }}>Prenditi cura di te.</h2>
-          <p style={{ fontSize:16, color:"rgba(255,255,255,0.8)", lineHeight:1.6, marginBottom:32 }}>
+          <h2 style={{ fontSize:"clamp(26px,4vw,38px)", fontWeight:700, color:palette.white, marginBottom:16 }}>Prenditi cura di te.</h2>
+          <p style={{ fontSize:"clamp(14px,2vw,16px)", color:"rgba(255,255,255,0.8)", lineHeight:1.6, marginBottom:32 }}>
             Prenota la tua visita ginecologica a Genova. Ti dedicherò tutto il tempo necessario per ascoltarti e prendermi cura della tua salute.
           </p>
-          <div style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap" }}>
+          <div className="btn-row" style={{ justifyContent:"center" }}>
             <button className="cta-btn" style={{ background:palette.white, color:palette.rose }} onClick={()=>nav(PAGES.contatti)}>
               <Phone size={16}/> Chiama il 351 817 1675
             </button>
@@ -454,14 +465,14 @@ function GinecologaPage({ nav }) {
 function ContattiPage() {
   return (
     <div>
-      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"100px 24px 60px", textAlign:"center" }}>
+      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"clamp(80px,12vw,100px) clamp(16px,4vw,24px) clamp(40px,8vw,60px)", textAlign:"center" }}>
         <div className="fade-up" style={{ maxWidth:700, margin:"0 auto" }}>
-          <h1 style={{ fontSize:"clamp(30px,5vw,44px)", fontWeight:700, color:palette.white, marginBottom:16 }}>Prenota la Tua Visita</h1>
-          <p style={{ fontSize:17, color:"rgba(255,255,255,0.85)", lineHeight:1.6 }}>Sono a tua disposizione. Contattami per fissare un appuntamento o per qualsiasi domanda.</p>
+          <h1 style={{ fontSize:"clamp(26px,5vw,44px)", fontWeight:700, color:palette.white, marginBottom:16 }}>Prenota la Tua Visita</h1>
+          <p style={{ fontSize:"clamp(15px,2vw,17px)", color:"rgba(255,255,255,0.85)", lineHeight:1.6 }}>Sono a tua disposizione. Contattami per fissare un appuntamento o per qualsiasi domanda.</p>
         </div>
       </div>
       <div className="section-pad">
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:32 }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(300px,100%),1fr))", gap:32 }}>
           {/* Contact methods */}
           <div>
             <h2 style={{ fontSize:26, fontWeight:600, color:palette.navy, marginBottom:24 }}>Come contattarmi</h2>
@@ -471,7 +482,7 @@ function ContattiPage() {
               { icon:<CalendarDays size={20}/>, label:"Prenotazione online", value:"MioDottore.it", sub:"Prenota direttamente online", action:()=>window.open("https://www.miodottore.it/valentina-la-pica/ginecologo/genova","_blank") },
               { icon:<Clock size={20}/>, label:"Orari", value:"Su appuntamento", sub:"Lunedì — Venerdì" },
             ].map((c,i) => (
-              <div key={i} onClick={c.action} style={{ display:"flex", gap:16, padding:"20px 0", borderBottom:`1px solid ${palette.border}`, cursor:c.action?"pointer":"default" }}>
+              <div key={i} onClick={c.action} style={{ display:"flex", gap:16, padding:"20px 0", borderBottom:`1px solid ${palette.border}`, cursor:c.action?"pointer":"default", minHeight:72 }}>
                 <div style={{ width:44, height:44, borderRadius:12, background:palette.rosePale, display:"flex", alignItems:"center", justifyContent:"center", color:palette.rose, flexShrink:0 }}>{c.icon}</div>
                 <div>
                   <div style={{ fontSize:12, color:palette.mist, textTransform:"uppercase", letterSpacing:1, marginBottom:4 }}>{c.label}</div>
@@ -480,7 +491,7 @@ function ContattiPage() {
                 </div>
               </div>
             ))}
-            <div style={{ marginTop:24, display:"flex", gap:12, flexWrap:"wrap" }}>
+            <div className="btn-row" style={{ marginTop:24 }}>
               <button className="cta-btn" onClick={()=>window.open("tel:+393518171675")}><Phone size={16}/> Chiama ora</button>
               <button className="wa-btn" onClick={()=>window.open("https://wa.me/393518171675","_blank")}><MessageCircle size={16}/> WhatsApp</button>
             </div>
@@ -537,14 +548,14 @@ function BlogPage() {
   ];
   return (
     <div>
-      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"100px 24px 60px", textAlign:"center" }}>
+      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"clamp(80px,12vw,100px) clamp(16px,4vw,24px) clamp(40px,8vw,60px)", textAlign:"center" }}>
         <div className="fade-up">
-          <h1 style={{ fontSize:"clamp(30px,5vw,44px)", fontWeight:700, color:palette.white, marginBottom:12 }}>Blog</h1>
-          <p style={{ fontSize:17, color:"rgba(255,255,255,0.85)" }}>Articoli di approfondimento sulla salute ginecologica, scritti dalla Dott.ssa La Pica</p>
+          <h1 style={{ fontSize:"clamp(26px,5vw,44px)", fontWeight:700, color:palette.white, marginBottom:12 }}>Blog</h1>
+          <p style={{ fontSize:"clamp(15px,2vw,17px)", color:"rgba(255,255,255,0.85)" }}>Articoli di approfondimento sulla salute ginecologica, scritti dalla Dott.ssa La Pica</p>
         </div>
       </div>
       <div className="section-pad">
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))", gap:24 }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(min(300px,100%),1fr))", gap:24 }}>
           {articles.map((a,i) => (
             <article key={i} className="hover-lift" style={{ background:palette.white, borderRadius:16, overflow:"hidden", border:`1px solid ${palette.border}` }}>
               <div style={{ height:8, background:`linear-gradient(90deg, ${palette.rose}, ${palette.gold})` }}/>
@@ -656,7 +667,7 @@ function Navbar({ page, nav }) {
               { label:"Blog", page:PAGES.blog },
               { label:"Contatti", page:PAGES.contatti },
             ].map((item,i) => (
-              <button key={i} onClick={()=>nav(item.page)} style={{ display:"block", padding:"12px 16px", background:"none", border:"none", cursor:"pointer", fontSize:15, fontWeight: page===item.page?700:400, color: page===item.page?palette.rose:palette.charcoal, fontFamily:"'DM Sans',sans-serif", textAlign:"left", borderRadius:8 }}>
+              <button key={i} onClick={()=>nav(item.page)} style={{ display:"block", padding:"14px 16px", minHeight:48, background:"none", border:"none", cursor:"pointer", fontSize:15, fontWeight: page===item.page?700:400, color: page===item.page?palette.rose:palette.charcoal, fontFamily:"'DM Sans',sans-serif", textAlign:"left", borderRadius:8, WebkitTapHighlightColor:"transparent" }}>
                 {item.label}
               </button>
             ))}
@@ -680,9 +691,9 @@ function Navbar({ page, nav }) {
 // ══════════════════════════════════════
 function Footer({ nav }) {
   return (
-    <footer style={{ background:palette.navy, color:"rgba(255,255,255,0.7)", padding:"60px 24px 32px" }}>
+    <footer style={{ background:palette.navy, color:"rgba(255,255,255,0.7)", padding:"clamp(40px,8vw,60px) clamp(16px,4vw,24px) 32px" }}>
       <div style={{ maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))", gap:40, marginBottom:48 }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(200px,100%),1fr))", gap:"clamp(24px,4vw,40px)", marginBottom:48 }}>
           <div>
             <div style={{ fontSize:22, fontWeight:700, color:palette.white, fontFamily:"'Cormorant Garamond',serif", marginBottom:8 }}>Dott.ssa Valentina La Pica</div>
             <p style={{ fontSize:13, lineHeight:1.6, marginBottom:16 }}>Specialista in Ginecologia e Ostetricia. Studio a Genova, zona Carignano. Visite in italiano e inglese.</p>
