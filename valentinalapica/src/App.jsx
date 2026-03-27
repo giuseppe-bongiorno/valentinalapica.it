@@ -260,7 +260,7 @@ function HomePage({ nav }) {
         <div className="section-pad" style={{ position:"relative", zIndex:1, display:"grid", gridTemplateColumns:"1fr", gap:40, paddingTop:"clamp(88px,14vw,120px)" }}>
           <div className="fade-up" style={{ maxWidth:720 }}>
             <div style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"6px 16px", background:palette.white, borderRadius:50, border:`1px solid ${palette.border}`, marginBottom:24, fontSize:13, color:palette.slate }}>
-              <MapPin size={14} color={palette.rose}/> Studio a Genova, zona Carignano
+              <MapPin size={14} color={palette.rose}/> Studio a Genova, zona Centro
             </div>
             <h1 style={{ fontSize:"clamp(36px,6vw,56px)", fontWeight:700, color:palette.navy, lineHeight:1.1, marginBottom:20 }}>
               Dott.ssa Valentina<br/>La Pica
@@ -329,7 +329,7 @@ function HomePage({ nav }) {
       {/* SERVIZI */}
       <section style={{ background:palette.white }}>
         <div className="section-pad">
-          <SectionTitle label="Servizi" title="Come posso aiutarti" subtitle="Offro una gamma completa di servizi ginecologici e ostetrici nel mio studio a Genova, zona Carignano." center />
+          <SectionTitle label="Servizi" title="Come posso aiutarti" subtitle="Offro una gamma completa di servizi ginecologici e ostetrici nel mio studio a Genova, zona Centro." center />
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(min(240px,100%),1fr))", gap:20 }}>
             {services.map((s,i) => (
               <ServiceCard key={i} icon={s.icon} title={s.title} desc={s.desc} onClick={()=>nav(s.page)} />
@@ -355,22 +355,26 @@ function HomePage({ nav }) {
       <section style={{ background:palette.cream }}>
         <div className="section-pad">
           <SectionTitle label="Dove ricevo" title="Due sedi a Genova per te" />
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(280px,100%),1fr))", gap:24 }}>
-            {[
-              { name:"Genova Centro", addr:"Via Cesarea 2/20 secondo piano, 16121 Genova", zone:"Via XX Settembre · Carignano · Foce · Castelletto · Centro", transport:"10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20", primary:true },
-             /* { name:"Casa della Salute Nervi", addr:"Viale Franchini 24, 16167 Genova", zone:"Nervi · Quarto · Quinto · Bogliasco · Recco", transport:"Stazione Genova Nervi · Bus AMT", primary:false },*/
-            ].map((s,i) => (
-              <div key={i} style={{ background:palette.white, borderRadius:16, padding:28, border:s.primary?`2px solid ${palette.rose}`:`1px solid ${palette.border}` }}>
-                {s.primary && <div style={{ fontSize:11, fontWeight:700, color:palette.rose, textTransform:"uppercase", letterSpacing:1.5, marginBottom:8 }}>Sede principale</div>}
-                <h3 style={{ fontSize:20, fontWeight:600, color:palette.navy, marginBottom:8 }}>{s.name}</h3>
-                <div style={{ display:"flex", alignItems:"flex-start", gap:8, marginBottom:8 }}>
-                  <MapPin size={14} color={palette.gold} style={{ marginTop:3, flexShrink:0 }}/>
-                  <span style={{ fontSize:14, color:palette.slate }}>{s.addr}</span>
-                </div>
-                <div style={{ fontSize:13, color:palette.mist, marginBottom:8 }}>{s.zone}</div>
-                <div style={{ fontSize:13, color:palette.mist }}>{s.transport}</div>
+          <div style={{ maxWidth:560 }}>
+            <div style={{ background:palette.white, borderRadius:16, padding:28, border:`2px solid ${palette.rose}` }}>
+              <div style={{ fontSize:11, fontWeight:700, color:palette.rose, textTransform:"uppercase", letterSpacing:1.5, marginBottom:8 }}>Sede</div>
+              <h3 style={{ fontSize:20, fontWeight:600, color:palette.navy, marginBottom:8 }}>Genova Centro</h3>
+              <div style={{ display:"flex", alignItems:"flex-start", gap:8, marginBottom:12 }}>
+                <MapPin size={14} color={palette.gold} style={{ marginTop:3, flexShrink:0 }}/>
+                <span style={{ fontSize:14, color:palette.slate }}>Via Cesarea 2/20 secondo piano, 16121 Genova</span>
               </div>
-            ))}
+              {[
+                "Via XX Settembre · Centro · Foce · Castelletto · Centro",
+                "10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20",
+                "Auto: uscita A12 Genova Est",
+                "Parcheggi nelle vie limitrofe, P.zza della Vittoria",
+              ].map((d,i) => (
+                <div key={i} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
+                  <CheckCircle size={12} color={palette.gold} style={{ flexShrink:0 }}/>
+                  <span style={{ fontSize:13, color:palette.mist }}>{d}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -420,7 +424,7 @@ function GinecologaPage({ nav }) {
     <ServicePage
       nav={nav}
       title="Ginecologa a Genova"
-      intro="Se stai cercando una ginecologa a Genova esperta, attenta e disponibile, sei nel posto giusto. Ti accolgo nel mio studio privato a Genova, in zona Carignano, con un approccio basato sull'ascolto e la competenza."
+      intro="Se stai cercando una ginecologa a Genova esperta, attenta e disponibile, sei nel posto giusto. Ti accolgo nel mio studio privato a Genova, in zona Centro, con un approccio basato sull'ascolto e la competenza."
       sections={[
         { heading:"Chi sono: formazione ed esperienza", paragraphs:[
           "Sono la Dott.ssa Valentina La Pica, medico specialista in Ginecologia e Ostetricia. Mi sono laureata con lode in Medicina e Chirurgia nel 2012 all'Università degli Studi di Genova e ho conseguito la Specializzazione al Policlinico Universitario IRCCS San Martino, il principale ospedale della Liguria.",
@@ -440,7 +444,7 @@ function GinecologaPage({ nav }) {
           "Infertilit\u00E0 di coppia — valutazione completa e coordinamento con centri di PMA.",
         ]},
         { heading:"Dove si trova lo studio a Genova", paragraphs:[
-          "Il mio studio privato si trova in Viale Sauli 39/3, nel quartiere di Carignano, a Genova. È una zona centrale e ben collegata, facilmente raggiungibile da Genova Centro, Castelletto, Foce, San Fruttuoso, Albaro, Sturla, Quinto e Nervi.",
+          "Il mio studio privato si trova in Via Cesarea,2/20 al secondo piano, traversa di Via XX Settembre, a Genova. È una zona centrale e ben collegata, facilmente raggiungibile da Genova Centro, Castelletto, Foce, San Fruttuoso, Albaro, Sturla, Quinto e Nervi.",
           "Per chi viene da fuori Genova, lo studio è a 10 minuti a piedi dalla stazione di Genova Brignole, raggiungibile anche dall'autostrada A12 (uscita Genova Est). Le pazienti da Chiavari, Rapallo, Savona, La Spezia e dall'entroterra ligure possono raggiungermi facilmente.",
           "Ricevo anche presso la Casa della Salute in Viale Franchini 24, Genova Nervi — comoda per chi risiede nel Levante genovese: Quarto, Quinto, Nervi, Bogliasco, Pieve Ligure, Sori, Recco, Camogli.",
         ]},
@@ -453,7 +457,7 @@ function GinecologaPage({ nav }) {
         { q:"Qual è la miglior ginecologa a Genova?", a:"La scelta dipende dalle tue esigenze. La Dott.ssa La Pica ha formazione al Policlinico San Martino e Gaslini, con competenze in menopausa, endometriosi, gravidanza e ginecologia pediatrica. Le pazienti la descrivono come professionale, empatica e attenta." },
         { q:"La Dott.ssa La Pica riceve in inglese?", a:"Sì. Lo studio è aperto anche a pazienti di madrelingua inglese che vivono a Genova o in Liguria." },
         { q:"Si possono fare ecografia e Pap test nello stesso appuntamento?", a:"Sì. Eseguo entrambi gli esami nella stessa seduta, ottimizzando i tempi." },
-        { q:"Come si arriva allo studio in Viale Sauli?", a:"Bus AMT linee 15, 17, 20 (fermata Corso Torino / Piazza Palermo). A 10 minuti a piedi dalla stazione Brignole. In auto: uscita Genova Est. Parcheggi nelle vie circostanti." },
+        { q:"Come si arriva allo studio in Via Cesarea?", a:"Bus AMT linee 15, 17, 20 (fermata Corso Torino / Piazza Palermo). A 10 minuti a piedi dalla stazione Brignole. In auto: uscita Genova Est. Parcheggi nelle vie circostanti e in P.zza della Vittoria." },
         { q:"La Dott.ssa si occupa anche di menopausa e ormoni bioidentici?", a:"Sì. La menopausa e la terapia con ormoni bioidentici sono tra le sue aree di specializzazione. Offre percorsi personalizzati per vampate, insonnia, secchezza vaginale e prevenzione osteoporosi." },
       ]}
       ctaText="Prenota la tua visita ginecologica a Genova"
@@ -500,31 +504,76 @@ function ContattiPage() {
           </div>
           {/* Locations */}
           <div>
-            <h2 style={{ fontSize:26, fontWeight:600, color:palette.navy, marginBottom:24 }}>Sedi</h2>
-            {[
-              { name:"Genova Centro", addr:"Via Cesarea 2/20 secondo piano, 16121 Genova", zone:"Via XX Settembre · Carignano · Foce · Castelletto · Centro", transport:"10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20", primary:true },
-              /*{ name:"Casa della Salute Nervi", addr:"Viale Franchini 24 — 16167 Genova", details:["Stazione Genova Nervi","Ideale per: Quarto, Quinto, Bogliasco, Recco, Camogli"], primary:false },*/
-            ].map((s,i) => (
-              <div key={i} style={{ background:palette.white, borderRadius:16, padding:24, border:s.primary?`2px solid ${palette.rose}`:`1px solid ${palette.border}`, marginBottom:16 }}>
-                {s.primary && <div style={{ fontSize:11, fontWeight:700, color:palette.rose, textTransform:"uppercase", letterSpacing:1.5, marginBottom:8 }}>Sede principale</div>}
-                <h3 style={{ fontSize:18, fontWeight:600, color:palette.navy, marginBottom:4 }}>{s.name}</h3>
-                <p style={{ fontSize:14, color:palette.slate, marginBottom:12 }}>{s.addr}</p>
-                {s.details.map((d,j) => (
-                  <div key={j} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
-                    <CheckCircle size={12} color={palette.gold}/>
-                    <span style={{ fontSize:13, color:palette.mist }}>{d}</span>
-                  </div>
-                ))}
-              </div>
-            ))}
-            {/* Map placeholder */}
-            <div style={{ background:palette.creamDark, borderRadius:16, height:200, display:"flex", alignItems:"center", justifyContent:"center", border:`1px solid ${palette.border}`, marginTop:8 }}>
-              <div style={{ textAlign:"center", color:palette.mist }}>
-                <MapPin size={32} style={{ marginBottom:8 }}/>
-                <p style={{ fontSize:13 }}>Google Maps — Viale Sauli 39/3, Genova</p>
-                <p style={{ fontSize:11, marginTop:4 }}>Inserire iframe Google Maps nel sito finale</p>
-              </div>
+            <h2 style={{ fontSize:26, fontWeight:600, color:palette.navy, marginBottom:24 }}>Sede</h2>
+            <div style={{ background:palette.white, borderRadius:16, padding:24, border:`2px solid ${palette.rose}`, marginBottom:16 }}>
+              <div style={{ fontSize:11, fontWeight:700, color:palette.rose, textTransform:"uppercase", letterSpacing:1.5, marginBottom:8 }}>Sede principale</div>
+              <h3 style={{ fontSize:18, fontWeight:600, color:palette.navy, marginBottom:4 }}>Genova Centro</h3>
+              <p style={{ fontSize:14, color:palette.slate, marginBottom:12 }}>Via Cesarea 2/20 secondo piano, 16121 Genova</p>
+              {[
+                "Via XX Settembre · Centro · Foce · Castelletto · Centro",
+                "10 min a piedi da Genova Brignole · Bus AMT 15, 17, 20",
+                "Auto: uscita A12 Genova Est",
+                "Parcheggi nelle vie limitrofe, P.zza della Vittoria",
+              ].map((d,j) => (
+                <div key={j} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
+                  <CheckCircle size={12} color={palette.gold}/>
+                  <span style={{ fontSize:13, color:palette.mist }}>{d}</span>
+                </div>
+              ))}
             </div>
+            {/* Map placeholder */}
+{/* Google Map */}
+<div style={{ marginTop:12 }}>
+  <div
+    style={{
+      position: "relative",
+      width: "100%",
+      paddingBottom: "56%",
+      borderRadius: 16,
+      overflow: "hidden",
+      border: `1px solid ${palette.border}`
+    }}
+  >
+    <iframe
+      src="https://www.google.com/maps?q=Via+Cesarea+2/20+Genova&output=embed"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        border: 0
+      }}
+      loading="lazy"
+      allowFullScreen
+      referrerPolicy="no-referrer-when-downgrade"
+    />
+  </div>
+
+  {/* Bottone indicazioni */}
+  <div style={{ marginTop:12 }}>
+    <a
+      href="https://maps.google.com/?q=Via+Cesarea+2/20+Genova"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 8,
+        background: palette.rose,
+        color: palette.white,
+        padding: "10px 16px",
+        borderRadius: 10,
+        fontSize: 14,
+        fontWeight: 500,
+        textDecoration: "none"
+      }}
+    >
+      <MapPin size={16}/>
+      Apri su Google Maps
+    </a>
+  </div>
+</div>
           </div>
         </div>
       </div>
@@ -706,7 +755,7 @@ function Footer({ nav }) {
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(200px,100%),1fr))", gap:"clamp(24px,4vw,40px)", marginBottom:48 }}>
           <div>
             <div style={{ fontSize:22, fontWeight:700, color:palette.white, fontFamily:"'Cormorant Garamond',serif", marginBottom:8 }}>Dott.ssa Valentina La Pica</div>
-            <p style={{ fontSize:13, lineHeight:1.6, marginBottom:16 }}>Specialista in Ginecologia e Ostetricia. Studio a Genova, zona Carignano. Visite in italiano e inglese.</p>
+            <p style={{ fontSize:13, lineHeight:1.6, marginBottom:16 }}>Specialista in Ginecologia e Ostetricia. Studio a Genova, zona Centro. Visite in italiano e inglese.</p>
             <div style={{ display:"flex", gap:12 }}>
               {["LinkedIn","Instagram","TikTok"].map(s => (
                 <span key={s} style={{ fontSize:12, padding:"4px 10px", border:"1px solid rgba(255,255,255,0.2)", borderRadius:20, cursor:"pointer" }}>{s}</span>
@@ -723,7 +772,7 @@ function Footer({ nav }) {
             <div style={{ fontSize:14, fontWeight:700, color:palette.white, marginBottom:16 }}>Contatti</div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:12 }}><Phone size={14}/> <span style={{ fontSize:13 }}>351 817 1675</span></div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:12 }}><Mail size={14}/> <span style={{ fontSize:13 }}>segreteria@valentinalapica.it</span></div>
-            <div style={{ display:"flex", alignItems:"flex-start", gap:8, marginBottom:12 }}><MapPin size={14} style={{ marginTop:2 }}/> <span style={{ fontSize:13 }}>V.le Sauli 39/3<br/>16121 Genova</span></div>
+            <div style={{ display:"flex", alignItems:"flex-start", gap:8, marginBottom:12 }}><MapPin size={14} style={{ marginTop:2 }}/> <span style={{ fontSize:13 }}>Via Cesarea, 2/20<br/>16121 Genova</span></div>
           </div>
           <div>
             <div style={{ fontSize:14, fontWeight:700, color:palette.white, marginBottom:16 }}>Prenota</div>
@@ -749,7 +798,7 @@ function Footer({ nav }) {
 const serviceData = {
   [PAGES.visita]: {
     title: "Visita Ginecologica a Genova",
-    intro: "La visita ginecologica è il gesto più importante che puoi fare per la tua salute intima. Ti accolgo nel mio studio a Genova Carignano in un ambiente riservato.",
+    intro: "La visita ginecologica è il gesto più importante che puoi fare per la tua salute intima. Ti accolgo nel mio studio a Genova Centro in un ambiente riservato.",
     sections: [
       { heading:"Cosa comprende la visita", paragraphs:[
         "Ogni visita include tre momenti: un colloquio anamnestico sulla tua storia clinica, l'esame obiettivo delicato con spiegazione di ogni passaggio, e l'ecografia transvaginale quando indicata. Se necessario, eseguo anche il Pap test nella stessa seduta.",
@@ -874,15 +923,15 @@ const serviceData = {
 const META = {
   [PAGES.home]: {
     title: "Dott.ssa Valentina La Pica — Ginecologa a Genova",
-    description: "Specialista in Ginecologia e Ostetricia a Genova Carignano. Laureata con lode, specializzata al Policlinico San Martino. Prenota al 351 817 1675.",
+    description: "Specialista in Ginecologia e Ostetricia a Genova Centro. Laureata con lode, specializzata al Policlinico San Martino. Prenota al 351 817 1675.",
   },
   [PAGES.ginecologa]: {
     title: "Ginecologa a Genova | Dott.ssa Valentina La Pica",
-    description: "Cerchi una ginecologa a Genova? La Dott.ssa La Pica visita in zona Carignano e Nervi. Specializzata al San Martino e all'Istituto Gaslini.",
+    description: "Cerchi una ginecologa a Genova? La Dott.ssa La Pica visita in zona Centro e Nervi. Specializzata al San Martino e all'Istituto Gaslini.",
   },
   [PAGES.visita]: {
     title: "Visita Ginecologica a Genova | Dott.ssa La Pica",
-    description: "Visita ginecologica completa con ecografia transvaginale e Pap test. Studio privato a Genova Carignano. Prenota online o al 351 817 1675.",
+    description: "Visita ginecologica completa con ecografia transvaginale e Pap test. Studio privato a Genova Centro. Prenota online o al 351 817 1675.",
   },
   [PAGES.paptest]: {
     title: "Pap Test e Screening HPV a Genova | Dott.ssa La Pica",
@@ -890,7 +939,7 @@ const META = {
   },
   [PAGES.ecografia]: {
     title: "Ecografia Transvaginale a Genova | Dott.ssa La Pica",
-    description: "Ecografia transvaginale e 3D a Genova per diagnosi di cisti, endometriosi, fibromi, polipi. Studio Carignano. Prenota al 351 817 1675.",
+    description: "Ecografia transvaginale e 3D a Genova per diagnosi di cisti, endometriosi, fibromi, polipi. Studio Centro. Prenota al 351 817 1675.",
   },
   [PAGES.gravidanza]: {
     title: "Assistenza Gravidanza a Genova | Dott.ssa La Pica",
@@ -906,11 +955,11 @@ const META = {
   },
   [PAGES.menopausa]: {
     title: "Menopausa e Ormoni Bioidentici a Genova | Dott.ssa La Pica",
-    description: "Terapia personalizzata con ormoni bioidentici per vampate, insonnia, secchezza vaginale. Studio privato a Genova Carignano.",
+    description: "Terapia personalizzata con ormoni bioidentici per vampate, insonnia, secchezza vaginale. Studio privato a Genova Centro.",
   },
   [PAGES.contatti]: {
     title: "Prenota una Visita | Dott.ssa Valentina La Pica Genova",
-    description: "Prenota la tua visita ginecologica a Genova. Chiama o scrivi su WhatsApp al 351 817 1675. Studio in Viale Sauli 39/3, Carignano.",
+    description: "Prenota la tua visita ginecologica a Genova. Chiama o scrivi su WhatsApp al 351 817 1675. Studio in Via Cesarea,2/20, Centro.",
   },
   [PAGES.blog]: {
     title: "Blog di Ginecologia | Dott.ssa Valentina La Pica Genova",
