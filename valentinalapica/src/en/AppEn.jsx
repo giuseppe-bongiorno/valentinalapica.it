@@ -509,10 +509,7 @@ function Navbar({ page, nav, onLangChange }) {
   ];
 
   const langSwitch = (
-    <div style={{ display:"flex", gap:2, padding:"3px", background:palette.creamDark, borderRadius:20 }}>
-      <button onClick={()=>onLangChange("it")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:400, background:"transparent", color:palette.mist, fontFamily:"'DM Sans',sans-serif" }}>🇮🇹 IT</button>
-      <button onClick={()=>onLangChange("en")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:700, background:palette.white, color:palette.navy, fontFamily:"'DM Sans',sans-serif", boxShadow:"0 1px 4px rgba(0,0,0,0.08)" }}>🇬🇧 EN</button>
-    </div>
+    <button onClick={()=>onLangChange("it")} style={{ padding:"5px 12px", borderRadius:20, border:`1px solid ${palette.border}`, cursor:"pointer", fontSize:13, fontWeight:600, background:palette.white, color:palette.navy, fontFamily:"'DM Sans',sans-serif" }}>🇮🇹 IT</button>
   );
 
   return (
@@ -555,10 +552,13 @@ function Navbar({ page, nav, onLangChange }) {
             </button>
           </div>
 
-          <button onClick={()=>setMobileOpen(!mobileOpen)} aria-expanded={mobileOpen} aria-controls="mobile-menu-en" aria-label={mobileOpen?"Close menu":"Open menu"}
-            style={{ display:"none", background:"none", border:"none", cursor:"pointer", color:palette.navy, padding:8, minWidth:44, minHeight:44 }} className="mobile-toggle">
-            {mobileOpen ? <X size={24}/> : <Menu size={24}/>}
-          </button>
+          <div className="mobile-toggle" style={{ display:"none", alignItems:"center", gap:8 }}>
+            {langSwitch}
+            <button onClick={()=>setMobileOpen(!mobileOpen)} aria-expanded={mobileOpen} aria-controls="mobile-menu-en" aria-label={mobileOpen?"Close menu":"Open menu"}
+              style={{ background:"none", border:"none", cursor:"pointer", color:palette.navy, padding:8, minWidth:44, minHeight:44 }}>
+              {mobileOpen ? <X size={24}/> : <Menu size={24}/>}
+            </button>
+          </div>
         </div>
 
         {mobileOpen && (
@@ -575,9 +575,6 @@ function Navbar({ page, nav, onLangChange }) {
                 {item.label}
               </button>
             ))}
-            <div style={{ padding:"12px 16px" }}>
-              {langSwitch}
-            </div>
             <button className="cta-btn" style={{ marginTop:4, justifyContent:"center" }} onClick={()=>nav(PAGES.contact)}>
               <Phone size={16}/> Book an appointment
             </button>
@@ -586,7 +583,7 @@ function Navbar({ page, nav, onLangChange }) {
       </nav>
       <style>{`
         @media(min-width:769px) { .mobile-toggle, .mobile-menu { display:none !important; } }
-        @media(max-width:768px) { .desktop-nav { display:none !important; } .mobile-toggle { display:block !important; } }
+        @media(max-width:768px) { .desktop-nav { display:none !important; } .mobile-toggle { display:flex !important; } }
       `}</style>
     </>
   );

@@ -775,26 +775,25 @@ function Navbar({ page, nav, onLangChange }) {
             {navItem("Ginecologa Genova", PAGES.ginecologa)}
             {navItem("Blog", PAGES.blog)}
             {navItem("Contatti", PAGES.contatti)}
-            <div style={{ display:"flex", gap:2, padding:"3px", background:palette.creamDark, borderRadius:20 }}>
-              <button onClick={()=>onLangChange("it")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:700, background:palette.white, color:palette.navy, fontFamily:"'DM Sans',sans-serif", boxShadow:"0 1px 4px rgba(0,0,0,0.08)" }}>🇮🇹 IT</button>
-              <button onClick={()=>onLangChange("en")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:400, background:"transparent", color:palette.mist, fontFamily:"'DM Sans',sans-serif" }}>🇬🇧 EN</button>
-            </div>
+            <button onClick={()=>onLangChange("en")} style={{ padding:"5px 12px", borderRadius:20, border:`1px solid ${palette.border}`, cursor:"pointer", fontSize:13, fontWeight:600, background:palette.white, color:palette.navy, fontFamily:"'DM Sans',sans-serif" }}>🇬🇧 EN</button>
             <button className="cta-btn" style={{ padding:"8px 20px", fontSize:13 }} onClick={()=>nav(PAGES.contatti)}>
               <Phone size={14}/> Prenota
             </button>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            onClick={()=>setMobileOpen(!mobileOpen)}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-            aria-label={mobileOpen ? "Chiudi menu" : "Apri menu"}
-            style={{ display:"none", background:"none", border:"none", cursor:"pointer", color:palette.navy, padding:8, minWidth:44, minHeight:44 }}
-            className="mobile-toggle"
-          >
-            {mobileOpen ? <X size={24}/> : <Menu size={24}/>}
-          </button>
+          {/* Mobile: lang switcher + hamburger */}
+          <div className="mobile-toggle" style={{ display:"none", alignItems:"center", gap:8 }}>
+            <button onClick={()=>onLangChange("en")} style={{ padding:"5px 12px", borderRadius:20, border:`1px solid ${palette.border}`, cursor:"pointer", fontSize:13, fontWeight:600, background:palette.white, color:palette.navy, fontFamily:"'DM Sans',sans-serif" }}>🇬🇧 EN</button>
+            <button
+              onClick={()=>setMobileOpen(!mobileOpen)}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              aria-label={mobileOpen ? "Chiudi menu" : "Apri menu"}
+              style={{ background:"none", border:"none", cursor:"pointer", color:palette.navy, padding:8, minWidth:44, minHeight:44 }}
+            >
+              {mobileOpen ? <X size={24}/> : <Menu size={24}/>}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
@@ -811,12 +810,6 @@ function Navbar({ page, nav, onLangChange }) {
                 {item.label}
               </button>
             ))}
-            <div style={{ padding:"4px 16px 8px" }}>
-              <div style={{ display:"flex", gap:2, padding:"3px", background:palette.creamDark, borderRadius:20, width:"fit-content" }}>
-                <button onClick={()=>onLangChange("it")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:700, background:palette.white, color:palette.navy, fontFamily:"'DM Sans',sans-serif" }}>🇮🇹 IT</button>
-                <button onClick={()=>onLangChange("en")} style={{ padding:"4px 10px", borderRadius:16, border:"none", cursor:"pointer", fontSize:12, fontWeight:400, background:"transparent", color:palette.mist, fontFamily:"'DM Sans',sans-serif" }}>🇬🇧 EN</button>
-              </div>
-            </div>
             <button className="cta-btn" style={{ marginTop:4, justifyContent:"center" }} onClick={()=>nav(PAGES.contatti)}>
               <Phone size={16}/> Prenota la visita
             </button>
@@ -826,7 +819,7 @@ function Navbar({ page, nav, onLangChange }) {
 
       <style>{`
         @media(min-width:769px) { .mobile-toggle, .mobile-menu { display:none !important; } }
-        @media(max-width:768px) { .desktop-nav { display:none !important; } .mobile-toggle { display:block !important; } }
+        @media(max-width:768px) { .desktop-nav { display:none !important; } .mobile-toggle { display:flex !important; } }
       `}</style>
     </>
   );
