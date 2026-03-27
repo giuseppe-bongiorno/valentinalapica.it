@@ -1,5 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 const AppEn = lazy(() => import("./en/AppEn"));
+import { blogArticles } from "./blogData.js";
 import { Phone, Mail, MapPin, Clock, ChevronDown, Menu, X, Star, Heart, Baby, Stethoscope, CalendarDays, ArrowRight, MessageCircle, ExternalLink, CheckCircle, Award, GraduationCap, Building2, Users, Sparkles, Activity, Pill, Search } from "lucide-react";
 
 // ─── Design Tokens ───
@@ -585,19 +586,7 @@ function ContattiPage() {
 // ══════════════════════════════════════
 // BLOG
 // ══════════════════════════════════════
-function BlogPage() {
-  const articles = [
-    { title:"Pap Test: Cos'è, Quando Farlo e Perché È Fondamentale", cat:"Prevenzione", desc:"Tutto sul Pap test: cos'è, ogni quanto farlo, come prepararsi. Guida completa della ginecologa." },
-    { title:"Prima Visita Ginecologica: Guida per Non Avere Paura", cat:"Guida", desc:"Come si svolge, come prepararsi e cosa chiedere alla ginecologa. Passo dopo passo." },
-    { title:"Gravidanza: Prima Visita ed Esami Trimestre per Trimestre", cat:"Gravidanza", desc:"Sei incinta? Il calendario completo degli esami e delle ecografie." },
-    { title:"Endometriosi: Come Riconoscerla e Cosa Fare", cat:"Patologie", desc:"I 6 sintomi principali, la diagnosi ecografica e le opzioni di trattamento." },
-    { title:"Infezioni Vaginali Ricorrenti: Cause e Cure", cat:"Salute intima", desc:"Candida, vaginosi, cistite: perché tornano e come curarle definitivamente." },
-    { title:"Contraccezione: Quale Metodo È Giusto per Te?", cat:"Contraccezione", desc:"Pillola, spirale, anello o impianto? Confronto completo dei metodi." },
-    { title:"Menopausa e Ormoni Bioidentici: Guida Completa", cat:"Menopausa", desc:"Sintomi, rimedi e come funziona la terapia con ormoni bioidentici." },
-    { title:"Dolore Pelvico Cronico e Vulvodinia: Non È \"Normale\"", cat:"Dolore pelvico", desc:"Cause, diagnosi e l'approccio multidisciplinare al trattamento." },
-    { title:"Controllo Ginecologico: Ogni Quanto e Perché Non Rimandare", cat:"Prevenzione", desc:"Le regole per età e gli esami da non saltare." },
-    { title:"Ovaio Policistico (PCOS): Sintomi, Cura e Fertilità", cat:"Patologie", desc:"Come riconoscerlo, gestirlo e restare incinta con la PCOS." },
-  ];
+function BlogPage({ nav }) {
   return (
     <div>
       <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"clamp(80px,12vw,100px) clamp(16px,4vw,24px) clamp(40px,8vw,60px)", textAlign:"center" }}>
@@ -608,17 +597,102 @@ function BlogPage() {
       </div>
       <div className="section-pad">
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(min(300px,100%),1fr))", gap:24 }}>
-          {articles.map((a,i) => (
-            <article key={i} className="hover-lift" style={{ background:palette.white, borderRadius:16, overflow:"hidden", border:`1px solid ${palette.border}` }}>
+          {blogArticles.map((a,i) => (
+            <article key={i} className="hover-lift" style={{ background:palette.white, borderRadius:16, overflow:"hidden", border:`1px solid ${palette.border}`, cursor:"pointer" }} onClick={() => nav(a.slug)}>
               <div style={{ height:8, background:`linear-gradient(90deg, ${palette.rose}, ${palette.gold})` }}/>
               <div style={{ padding:24 }}>
-                <div style={{ fontSize:11, fontWeight:700, color:palette.gold, textTransform:"uppercase", letterSpacing:1.5, marginBottom:12 }}>{a.cat}</div>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
+                  <div style={{ fontSize:11, fontWeight:700, color:palette.gold, textTransform:"uppercase", letterSpacing:1.5 }}>{a.cat}</div>
+                  <div style={{ fontSize:11, color:palette.mist }}>{a.readTime} di lettura</div>
+                </div>
                 <h3 style={{ fontSize:18, fontWeight:600, color:palette.navy, lineHeight:1.3, marginBottom:12 }}>{a.title}</h3>
                 <p style={{ fontSize:14, color:palette.slate, lineHeight:1.6, marginBottom:16 }}>{a.desc}</p>
-                <span style={{ fontSize:13, fontWeight:600, color:palette.rose, display:"flex", alignItems:"center", gap:4, cursor:"pointer" }}>Leggi l'articolo <ArrowRight size={14}/></span>
+                <span style={{ fontSize:13, fontWeight:600, color:palette.rose, display:"flex", alignItems:"center", gap:4 }}>Leggi l'articolo <ArrowRight size={14}/></span>
               </div>
             </article>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Blog Article Page ───
+function BlogArticlePage({ article, nav }) {
+  return (
+    <div>
+      {/* Hero */}
+      <div style={{ background:`linear-gradient(135deg, ${palette.navy} 0%, ${palette.rose} 100%)`, padding:"clamp(80px,12vw,100px) clamp(16px,4vw,24px) clamp(40px,8vw,60px)" }}>
+        <div style={{ maxWidth:760, margin:"0 auto" }} className="fade-up">
+          <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:16, flexWrap:"wrap" }}>
+            <span style={{ fontSize:11, fontWeight:700, color:palette.gold, textTransform:"uppercase", letterSpacing:1.5, background:"rgba(255,255,255,0.1)", padding:"4px 10px", borderRadius:20 }}>{article.cat}</span>
+            <span style={{ fontSize:13, color:"rgba(255,255,255,0.7)" }}>{article.readTime} di lettura</span>
+          </div>
+          <h1 style={{ fontSize:"clamp(22px,4vw,38px)", fontWeight:700, color:palette.white, lineHeight:1.2, marginBottom:20 }}>{article.title}</h1>
+          <p style={{ fontSize:"clamp(15px,2vw,17px)", color:"rgba(255,255,255,0.85)", lineHeight:1.7 }}>{article.intro}</p>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div style={{ maxWidth:760, margin:"0 auto", padding:"clamp(32px,6vw,64px) clamp(16px,4vw,24px)" }}>
+
+        {/* Breadcrumb */}
+        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:40, fontSize:13, color:palette.mist }}>
+          <button onClick={() => nav(PAGES.home)} style={{ background:"none", border:"none", cursor:"pointer", color:palette.rose, fontFamily:"'DM Sans',sans-serif", fontSize:13, padding:0 }}>Home</button>
+          <span>/</span>
+          <button onClick={() => nav(PAGES.blog)} style={{ background:"none", border:"none", cursor:"pointer", color:palette.rose, fontFamily:"'DM Sans',sans-serif", fontSize:13, padding:0 }}>Blog</button>
+          <span>/</span>
+          <span style={{ color:palette.charcoal }}>{article.cat}</span>
+        </div>
+
+        {/* Sections */}
+        {article.sections.map((s, i) => (
+          <div key={i} style={{ marginBottom:40 }}>
+            <h2 style={{ fontSize:"clamp(18px,3vw,24px)", fontWeight:600, color:palette.navy, marginBottom:16, lineHeight:1.3 }}>{s.heading}</h2>
+            {s.paragraphs.map((p, j) => (
+              <p key={j} style={{ fontSize:15, lineHeight:1.8, color:palette.charcoal, marginBottom:12 }}>{p}</p>
+            ))}
+          </div>
+        ))}
+
+        {/* Takeaways */}
+        {article.takeaways && article.takeaways.length > 0 && (
+          <div style={{ background:palette.rosePale, border:`1px solid ${palette.rose}`, borderRadius:16, padding:"24px 28px", marginBottom:48 }}>
+            <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+              <CheckCircle size={20} color={palette.rose}/>
+              <h3 style={{ fontSize:16, fontWeight:700, color:palette.rose }}>Punti chiave da ricordare</h3>
+            </div>
+            <ul style={{ listStyle:"none", display:"flex", flexDirection:"column", gap:10 }}>
+              {article.takeaways.map((t, i) => (
+                <li key={i} style={{ display:"flex", alignItems:"flex-start", gap:10, fontSize:14, color:palette.charcoal, lineHeight:1.6 }}>
+                  <span style={{ color:palette.rose, flexShrink:0, marginTop:2 }}>✓</span>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* FAQ */}
+        {article.faqs && article.faqs.length > 0 && (
+          <div style={{ marginBottom:48 }}>
+            <h2 style={{ fontSize:"clamp(18px,3vw,24px)", fontWeight:600, color:palette.navy, marginBottom:24 }}>Domande frequenti</h2>
+            <FAQ items={article.faqs}/>
+          </div>
+        )}
+
+        {/* CTA */}
+        <div style={{ background:`linear-gradient(135deg, ${palette.navy}, ${palette.rose})`, borderRadius:20, padding:"clamp(28px,5vw,48px)", textAlign:"center" }}>
+          <h2 style={{ fontSize:"clamp(20px,3vw,28px)", fontWeight:700, color:palette.white, marginBottom:12 }}>Hai altre domande?</h2>
+          <p style={{ fontSize:15, color:"rgba(255,255,255,0.85)", marginBottom:28, lineHeight:1.6 }}>Prenota una visita con la Dott.ssa La Pica per una consulenza personalizzata.</p>
+          <div className="btn-row" style={{ justifyContent:"center" }}>
+            <button className="cta-btn" onClick={() => nav(PAGES.contatti)} style={{ background:palette.white, color:palette.rose }}>
+              <CalendarDays size={16}/> Prenota una visita
+            </button>
+            <a className="wa-btn" href="https://wa.me/393518171675" target="_blank" rel="noreferrer">
+              <MessageCircle size={16}/> WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -1011,6 +1085,8 @@ export default function App() {
       const d = serviceData[page];
       return <ServicePage nav={nav} title={d.title} intro={d.intro} sections={d.sections} faqs={d.faqs}/>;
     }
+    const article = blogArticles.find(a => a.slug === page);
+    if (article) return <BlogArticlePage article={article} nav={nav}/>;
     return <HomePage nav={nav}/>;
   };
 
