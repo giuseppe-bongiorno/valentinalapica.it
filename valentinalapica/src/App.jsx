@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Phone, Mail, MapPin, Clock, ChevronDown, ChevronRight, Menu, X, Star, Heart, Baby, Shield, Stethoscope, CalendarDays, ArrowRight, MessageCircle, ExternalLink, CheckCircle, Award, GraduationCap, Building2, Users, Sparkles, Activity, Pill, Search, BookOpen } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, ChevronDown, Menu, X, Star, Heart, Baby, Stethoscope, CalendarDays, ArrowRight, MessageCircle, ExternalLink, CheckCircle, Award, GraduationCap, Building2, Users, Sparkles, Activity, Pill, Search } from "lucide-react";
 
 // ─── Design Tokens ───
 const palette = {
@@ -34,10 +34,7 @@ const PAGES = {
 };
 
 // ─── Styles ───
-const fontLink = `@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');`;
-
 const globalCSS = `
-${fontLink}
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { font-family:'DM Sans',sans-serif; color:${palette.charcoal}; background:${palette.cream}; overflow-x:hidden; }
@@ -103,6 +100,11 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
 
 a { color:${palette.rose}; text-decoration:none; }
 a:hover { text-decoration:underline; }
+
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  html { scroll-behavior:auto; }
+}
 `;
 
 // ─── FAQ Accordion ───
@@ -597,6 +599,7 @@ function Navbar({ page, nav }) {
   const navItem = (label, target) => (
     <button
       onClick={()=>nav(target)}
+      aria-current={page===target ? "page" : undefined}
       style={{ background:"none", border:"none", cursor:"pointer", fontSize:14, fontWeight: page===target?700:500, color: page===target?palette.rose:palette.charcoal, fontFamily:"'DM Sans',sans-serif", padding:"8px 0", transition:"color 0.2s" }}
     >{label}</button>
   );
@@ -613,9 +616,9 @@ function Navbar({ page, nav }) {
 
   return (
     <>
-      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:1000, background: scrolled?"rgba(253,248,244,0.95)":"rgba(253,248,244,0.8)", backdropFilter:"blur(12px)", borderBottom: scrolled?`1px solid ${palette.border}`:"1px solid transparent", transition:"all 0.3s" }}>
+      <nav aria-label="Navigazione principale" style={{ position:"fixed", top:0, left:0, right:0, zIndex:1000, background: scrolled?"rgba(253,248,244,0.95)":"rgba(253,248,244,0.8)", backdropFilter:"blur(12px)", borderBottom: scrolled?`1px solid ${palette.border}`:"1px solid transparent", transition:"all 0.3s" }}>
         <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-          <button onClick={()=>nav(PAGES.home)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:10 }}>
+          <button onClick={()=>nav(PAGES.home)} aria-label="Torna alla homepage" style={{ background:"none", border:"none", cursor:"pointer", display:"flex", alignItems:"center", gap:10 }}>
             <div style={{ width:36, height:36, borderRadius:"50%", background:`linear-gradient(135deg, ${palette.rose}, ${palette.gold})`, display:"flex", alignItems:"center", justifyContent:"center" }}>
               <span style={{ color:"white", fontFamily:"'Cormorant Garamond',serif", fontWeight:700, fontSize:18 }}>V</span>
             </div>
@@ -629,13 +632,13 @@ function Navbar({ page, nav }) {
           <div style={{ display:"flex", alignItems:"center", gap:24 }} className="desktop-nav">
             {navItem("Home", PAGES.home)}
             <div style={{ position:"relative" }} onMouseEnter={()=>setServicesOpen(true)} onMouseLeave={()=>setServicesOpen(false)}>
-              <button style={{ background:"none", border:"none", cursor:"pointer", fontSize:14, fontWeight:500, color:palette.charcoal, fontFamily:"'DM Sans',sans-serif", display:"flex", alignItems:"center", gap:4 }}>
+              <button aria-haspopup="true" aria-expanded={servicesOpen} style={{ background:"none", border:"none", cursor:"pointer", fontSize:14, fontWeight:500, color:palette.charcoal, fontFamily:"'DM Sans',sans-serif", display:"flex", alignItems:"center", gap:4 }}>
                 Servizi <ChevronDown size={14} style={{ transition:"transform 0.2s", transform:servicesOpen?"rotate(180deg)":"" }}/>
               </button>
               {servicesOpen && (
-                <div style={{ position:"absolute", top:"100%", left:-20, background:palette.white, borderRadius:12, boxShadow:"0 12px 40px rgba(0,0,0,0.12)", padding:8, minWidth:220, border:`1px solid ${palette.border}` }}>
+                <div role="menu" style={{ position:"absolute", top:"100%", left:-20, background:palette.white, borderRadius:12, boxShadow:"0 12px 40px rgba(0,0,0,0.12)", padding:8, minWidth:220, border:`1px solid ${palette.border}` }}>
                   {serviceItems.map((s,i) => (
-                    <button key={i} onClick={()=>nav(s.page)} style={{ display:"block", width:"100%", textAlign:"left", padding:"10px 16px", background:"none", border:"none", cursor:"pointer", fontSize:14, color:palette.charcoal, fontFamily:"'DM Sans',sans-serif", borderRadius:8, transition:"background 0.2s" }}
+                    <button role="menuitem" key={i} onClick={()=>nav(s.page)} style={{ display:"block", width:"100%", textAlign:"left", padding:"10px 16px", background:"none", border:"none", cursor:"pointer", fontSize:14, color:palette.charcoal, fontFamily:"'DM Sans',sans-serif", borderRadius:8, transition:"background 0.2s" }}
                       onMouseEnter={e=>e.target.style.background=palette.rosePale}
                       onMouseLeave={e=>e.target.style.background="transparent"}
                     >{s.label}</button>
@@ -652,14 +655,21 @@ function Navbar({ page, nav }) {
           </div>
 
           {/* Mobile hamburger */}
-          <button onClick={()=>setMobileOpen(!mobileOpen)} style={{ display:"none", background:"none", border:"none", cursor:"pointer", color:palette.navy }} className="mobile-toggle">
+          <button
+            onClick={()=>setMobileOpen(!mobileOpen)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileOpen ? "Chiudi menu" : "Apri menu"}
+            style={{ display:"none", background:"none", border:"none", cursor:"pointer", color:palette.navy, padding:8, minWidth:44, minHeight:44 }}
+            className="mobile-toggle"
+          >
             {mobileOpen ? <X size={24}/> : <Menu size={24}/>}
           </button>
         </div>
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="mobile-menu" style={{ background:palette.white, borderTop:`1px solid ${palette.border}`, padding:24, display:"flex", flexDirection:"column", gap:4 }}>
+          <div id="mobile-menu" role="navigation" aria-label="Menu mobile" className="mobile-menu" style={{ background:palette.white, borderTop:`1px solid ${palette.border}`, padding:24, display:"flex", flexDirection:"column", gap:4 }}>
             {[
               { label:"Home", page:PAGES.home },
               ...serviceItems,
@@ -667,7 +677,7 @@ function Navbar({ page, nav }) {
               { label:"Blog", page:PAGES.blog },
               { label:"Contatti", page:PAGES.contatti },
             ].map((item,i) => (
-              <button key={i} onClick={()=>nav(item.page)} style={{ display:"block", padding:"14px 16px", minHeight:48, background:"none", border:"none", cursor:"pointer", fontSize:15, fontWeight: page===item.page?700:400, color: page===item.page?palette.rose:palette.charcoal, fontFamily:"'DM Sans',sans-serif", textAlign:"left", borderRadius:8, WebkitTapHighlightColor:"transparent" }}>
+              <button key={i} onClick={()=>nav(item.page)} aria-current={page===item.page?"page":undefined} style={{ display:"block", padding:"14px 16px", minHeight:48, background:"none", border:"none", cursor:"pointer", fontSize:15, fontWeight: page===item.page?700:400, color: page===item.page?palette.rose:palette.charcoal, fontFamily:"'DM Sans',sans-serif", textAlign:"left", borderRadius:8, WebkitTapHighlightColor:"transparent" }}>
                 {item.label}
               </button>
             ))}
@@ -860,11 +870,70 @@ const serviceData = {
   },
 };
 
+// ─── Meta tag per pagina (SEO) ───
+const META = {
+  [PAGES.home]: {
+    title: "Dott.ssa Valentina La Pica — Ginecologa a Genova",
+    description: "Specialista in Ginecologia e Ostetricia a Genova Carignano. Laureata con lode, specializzata al Policlinico San Martino. Prenota al 351 817 1675.",
+  },
+  [PAGES.ginecologa]: {
+    title: "Ginecologa a Genova | Dott.ssa Valentina La Pica",
+    description: "Cerchi una ginecologa a Genova? La Dott.ssa La Pica visita in zona Carignano e Nervi. Specializzata al San Martino e all'Istituto Gaslini.",
+  },
+  [PAGES.visita]: {
+    title: "Visita Ginecologica a Genova | Dott.ssa La Pica",
+    description: "Visita ginecologica completa con ecografia transvaginale e Pap test. Studio privato a Genova Carignano. Prenota online o al 351 817 1675.",
+  },
+  [PAGES.paptest]: {
+    title: "Pap Test e Screening HPV a Genova | Dott.ssa La Pica",
+    description: "Pap test e HPV test rapido e indolore a Genova. Prevenzione del tumore cervicale. Prenota la visita al 351 817 1675.",
+  },
+  [PAGES.ecografia]: {
+    title: "Ecografia Transvaginale a Genova | Dott.ssa La Pica",
+    description: "Ecografia transvaginale e 3D a Genova per diagnosi di cisti, endometriosi, fibromi, polipi. Studio Carignano. Prenota al 351 817 1675.",
+  },
+  [PAGES.gravidanza]: {
+    title: "Assistenza Gravidanza a Genova | Dott.ssa La Pica",
+    description: "Ecografie, screening prenatali e assistenza alla gravidanza a Genova. Dalla conferma al parto. Prenota al 351 817 1675.",
+  },
+  [PAGES.endometriosi]: {
+    title: "Endometriosi a Genova: Diagnosi e Cura | Dott.ssa La Pica",
+    description: "Diagnosi ecografica esperta dell'endometriosi a Genova. Percorsi terapeutici personalizzati. Prenota la visita al 351 817 1675.",
+  },
+  [PAGES.contraccezione]: {
+    title: "Contraccezione a Genova | Consulenza Personalizzata",
+    description: "Pillola, spirale IUD, anello, impianto: consulenza contraccettiva personalizzata a Genova con la Dott.ssa La Pica.",
+  },
+  [PAGES.menopausa]: {
+    title: "Menopausa e Ormoni Bioidentici a Genova | Dott.ssa La Pica",
+    description: "Terapia personalizzata con ormoni bioidentici per vampate, insonnia, secchezza vaginale. Studio privato a Genova Carignano.",
+  },
+  [PAGES.contatti]: {
+    title: "Prenota una Visita | Dott.ssa Valentina La Pica Genova",
+    description: "Prenota la tua visita ginecologica a Genova. Chiama o scrivi su WhatsApp al 351 817 1675. Studio in Viale Sauli 39/3, Carignano.",
+  },
+  [PAGES.blog]: {
+    title: "Blog di Ginecologia | Dott.ssa Valentina La Pica Genova",
+    description: "Articoli di approfondimento sulla salute ginecologica: Pap test, menopausa, endometriosi, gravidanza. Scritti dalla Dott.ssa La Pica.",
+  },
+};
+
 // ══════════════════════════════════════
 // MAIN APP
 // ══════════════════════════════════════
 export default function App() {
   const [page, setPage] = useState(PAGES.home);
+
+  useEffect(() => {
+    const m = META[page] || META[PAGES.home];
+    document.title = m.title;
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute("content", m.description);
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", m.title);
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute("content", m.description);
+  }, [page]);
 
   const nav = (target) => {
     setPage(target);

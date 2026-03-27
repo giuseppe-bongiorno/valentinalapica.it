@@ -1,10 +1,79 @@
 <!doctype html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>valentinalapica</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts: preconnect + caricamento non bloccante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      />
+    </noscript>
+
+    <!-- SEO base (aggiornato dinamicamente per pagina via JS) -->
+    <title>Dott.ssa Valentina La Pica — Ginecologa a Genova</title>
+    <meta name="description" content="Dott.ssa Valentina La Pica, specialista in Ginecologia e Ostetricia a Genova. Studio privato in zona Carignano. Visite in italiano e inglese. Prenota al 351 817 1675." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.valentinalapica.it/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Dott.ssa Valentina La Pica" />
+    <meta property="og:title" content="Dott.ssa Valentina La Pica — Ginecologa a Genova" />
+    <meta property="og:description" content="Specialista in Ginecologia e Ostetricia. Studio privato a Genova Carignano. Prenota la tua visita." />
+    <meta property="og:url" content="https://www.valentinalapica.it/" />
+
+    <!-- Structured Data: Physician -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Physician",
+      "name": "Dott.ssa Valentina La Pica",
+      "description": "Specialista in Ginecologia e Ostetricia a Genova. Laurea con lode, specializzazione al Policlinico Universitario IRCCS San Martino.",
+      "url": "https://www.valentinalapica.it",
+      "telephone": "+393518171675",
+      "email": "segreteria@valentinalapica.it",
+      "medicalSpecialty": "https://schema.org/Gynecologic",
+      "hasCredential": "Specialista in Ginecologia e Ostetricia",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Viale Sauli 39/3",
+        "addressLocality": "Genova",
+        "postalCode": "16121",
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 44.4036,
+        "longitude": 8.9562
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "description": "Su appuntamento"
+      },
+      "sameAs": [
+        "https://www.miodottore.it/valentina-la-pica/ginecologo/genova"
+      ],
+      "priceRange": "\u20ac\u20ac",
+      "areaServed": {
+        "@type": "City",
+        "name": "Genova"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
